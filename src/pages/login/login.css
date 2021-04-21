@@ -97,3 +97,9 @@
     padding-left: 21px;
     text-align: left;
 }
+.FormErrorvalidation {
+    color: red;
+    text-align: left;
+    font-size: .8em;
+    font-weight: 600;
+}

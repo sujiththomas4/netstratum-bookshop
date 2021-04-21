@@ -4,15 +4,14 @@ import girlAvatar from "../../assets/images/avatarGirl.jpg";
 import "./authorCard.css";
 import { BsArrowRight, BsDashCircle } from "react-icons/bs";
 import { useState } from "react";
+import { getAuthorBooks } from "../../actions/authorActions";
+import {useHistory, useParams} from 'react-router-dom';
 const AuthorCard = (props) => {
-  const { author, index } = props;
-  const [openedCardModel, setOpenedCardModel] = useState(null);
-  const toggleCardModel = (mode, id) => {
-    setOpenedCardModel("")
-    if (mode === "open") {
-      setOpenedCardModel(id);
-    }
-  };
+  const { author, index,dispatch,activeAuthorBooks,activeAuthorID,toggleCardModel } = props;
+  const history = useHistory();
+  const gotoAuthorDetils = (id) =>{
+    history.push(`/author/${id}`);
+  }
   return (
     <>
       <Card className="cardWrapp_container">
@@ -41,17 +40,29 @@ const AuthorCard = (props) => {
             <Col className="cardArrow" xs={4}>
               <BsArrowRight
                 className="cardArrowRight"
-                onClick={() => toggleCardModel('open',author.id)}
+                onClick={() => toggleCardModel(author.id)}
               />
             </Col>
           </Row>
         </Card.Body>
-        {openedCardModel === author.id && (
+        {activeAuthorID === author.id && (
           <div className="cardOnClickDetails">
             <BsDashCircle
               className="cradHoverCloseIcon"
-              onClick={() => toggleCardModel()}
+              onClick={() => toggleCardModel("")}
             />
+            <Card.Title className="cardHoverTitle">{author.author_name}</Card.Title>
+            <Row className="cardHoverDetailsBody">
+                <Col xs={4} className="colorWhite">Total Books</Col>
+                <Col xs={8} className="colorWhite">{':  '}{activeAuthorBooks.length}</Col>
+                <Col xs={4} className="colorWhite">Books</Col>
+                <Col xs={8} className="colorWhite"> {':  '}{
+                    activeAuthorBooks.map((item,index)=>
+                        <span key={item.id}>{item.name}{activeAuthorBooks.length-1 !== index ? ', ':''}</span>
+                    )
+                }</Col>                
+            </Row>
+            <Button className="FilterButton filterButtoncardHover" onClick={()=>gotoAuthorDetils(author.id)}>More</Button>
           </div>
         )}
       </Card>

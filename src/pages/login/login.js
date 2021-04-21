@@ -24,14 +24,35 @@ function Login() {
       setPassword(event.target.value);
     }
   };
+  const checkvalidationForm = () =>{
+    setUsernameError("");
+    setPasswordError("")
+    let valid = true;
+    if(pass.length < 6){
+      valid = false;
+      setPasswordError("Password should containt min 6 charatcters")
+    }
+    else if(!(/\d/.test(pass) && /[a-zA-Z]/.test(pass))){
+      setPasswordError("Password should containt atleast 1 character and 1 number")
+    }
+    return valid
+  }
   const authenticateAction = async(e) => {
     e.preventDefault();
-    // dispatch({type : AUTHETICATION, payload : {username : uname, password : pass}});
-    const {isAuthorized,isGuest,isAdmin} = await dispatch(authenticate(uname,pass));
-    console.log(`Authorized : ${isAuthorized}, isAdmin : ${isAdmin}, isGuest : ${isGuest}`);
-    if(isAuthorized){
-      history.push("/author");
+    const valid = checkvalidationForm();
+    if(valid){
+      const {isAuthorized,isGuest,isAdmin} = await dispatch(authenticate(uname,pass));
+      if(isAuthorized){
+        if(isAdmin){
+          history.push("/author");
+        }
+        else{
+          history.push("/guest");
+        }
+        
+      }      
     }
+
   };
   return (
     <>
@@ -50,6 +71,7 @@ function Login() {
                 value={uname}
                 required
               />
+              {usernameError.length > 0 && <div className="FormErrorvalidation">{usernameError}</div> }
             </Form.Group>
 
             <Form.Group controlId="formBasicPassword">
@@ -60,8 +82,8 @@ function Login() {
                 onChange={(event) => formControlChange(event, "password")}
                 value={pass}
                 required
-                min={6}
               />
+              {passwordError.length > 0 && <div className="FormErrorvalidation">{passwordError}</div> }
             </Form.Group>
             <Form.Group controlId="formBasicCheckbox">
               <Row className="RowOverride">

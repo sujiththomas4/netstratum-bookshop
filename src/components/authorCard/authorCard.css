@@ -46,7 +46,7 @@
     left: 0px;
     height: 100%;
     width: 100%;
-    background-color: rgba(0,0,0,.4);
+    background-color: rgba(0,0,0,.8);
 }
 svg.cradHoverCloseIcon {
     color: white;
@@ -55,4 +55,42 @@ svg.cradHoverCloseIcon {
     margin-top: 10px;
     font-size: 2em;
     cursor: pointer;
+}
+.cardHoverTitle {
+    color: white !important;
+    font-size: 2em !important;
+    margin-top: 2em;
+}
+.cardHoverDetailsBody *{
+    font-size: white !important;
+}
+.colorWhite{
+    color: white !important;
+    text-align: left;
+}
+.cardHoverDetailsBody {
+    padding: 13px;
+    max-height: 250px;
+    /* background: red; */
+    overflow: hidden;
+}
+.colorWhite {
+    font-size: 1.3em;
+    color: white !important;
+    text-align: left;
+    margin-bottom: 12px;
+    padding-right: 0px !important;
+}
+.filterButtoncardHover {
+    background: transparent !important;
+    color: white !important;
+    border: 1px solid white !important;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 25px;
+}
+.filterButtoncardHover:hover{
+    background: white !important;
+    color: black !important;
 }
